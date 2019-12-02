@@ -15,7 +15,7 @@ func check(e error) {
 }
 
 func calc(f float64) float64 {
-	return math.Round(f/3.0) - 2.0
+	return math.Floor(f/3.0) - 2.0
 }
 
 func main() {
