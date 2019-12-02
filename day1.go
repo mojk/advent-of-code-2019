@@ -14,12 +14,23 @@ func check(e error) {
 	}
 }
 
-func calc(f float64) float64 {
+func calcFuel(f float64) float64 {
 	return math.Floor(f/3.0) - 2.0
 }
 
+func calcFuelRec(f float64) int {
+	value := math.Floor(f/3.0) - 2.0
+	if value > 0 {
+		globalsum += int(value)
+		calcFuelRec(value)
+	}
+	return globalsum
+}
+
+var globalsum int = 0
+var sum int = 0
+
 func main() {
-	var sum int = 0
 	file, err := os.Open("day1.txt")
 	check(err)
 
@@ -34,9 +45,13 @@ func main() {
 
 		value, err := strconv.ParseFloat(scanner.Text(), 64)
 		check(err)
-		sum += int(calc(value))
+		sum += int(calcFuel(value))
+		sum += int(calcFuelRec(value))
+
 	}
+	fmt.Println("Task 1 " + strconv.Itoa(sum))
+	fmt.Println("Task 2 " + strconv.Itoa(globalsum))
 
 	file.Close()
-	fmt.Println(sum)
+	// fmt.Println(sum)
 }
